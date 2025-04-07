@@ -1,0 +1,388 @@
+\documentclass[a4paper,12pt]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{lmodern}
+\usepackage{array} 
+\usepackage{caption}
+
+
+
+% Page setup
+\geometry{a4paper, margin=2.5cm, marginpar=1.5cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.8em}
+\renewcommand{\baselinestretch}{1.1}
+
+% Custom colors
+\definecolor{titleblue}{RGB}{0,76,151}
+\definecolor{sectiongray}{RGB}{80,80,80}
+\definecolor{codebackground}{RGB}{245,245,245}
+
+% Header/footer
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[R]{\textcolor{titleblue}{Microprocessors - Lab 1 Report}}
+\fancyfoot[C]{\textcolor{titleblue}{\thepage}}
+\setlength{\headheight}{14.5pt}
+\addtolength{\topmargin}{-2.5pt}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries\sffamily\color{titleblue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\sffamily\color{titleblue}}{\thesubsection}{1em}{}
+
+% Custom section boxes
+\newenvironment{sectionbox}[1]{%
+    \tcolorbox[
+        colback=titleblue!5,
+        colframe=titleblue!50,
+        arc=3mm,
+        title=#1,
+        fonttitle=\bfseries\sffamily,
+        before skip=1.2em,
+        after skip=1.2em
+    ]
+}{\endtcolorbox}
+
+% Code listing style
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{codebackground},   
+    commentstyle=\color{green!50!black},
+    keywordstyle=\color{titleblue},
+    numberstyle=\tiny\color{sectiongray},
+    stringstyle=\color{purple!70!black},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=8pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{titleblue!30},
+    frameround=tttt
+}
+
+\lstset{style=mystyle}
+
+% Document Information
+\title{
+    \vspace*{2cm}
+    \Huge\textbf{\textsf{Microprocessors Laboratory Report}}\\
+    \vspace{0.4cm}
+    \Large\textsf{Lab 1: Assembly Programming \& UART Communication}
+    \vspace{1cm}
+    \rule{\textwidth}{1pt}
+}
+
+\author{
+    \Large\begin{tabular}{rl}
+        \textbf{Fraidakis Ioannis}\\
+    \end{tabular}
+}
+
+\date{\textsf{April 2025}}
+
+
+\begin{document}
+\maketitle
+
+\vspace{0.5cm}
+
+\begin{sectionbox}{Executive Summary}
+This laboratory exercise explores low-level microcontroller programming through three ARM Cortex-M4 assembly language implementations, seamlessly integrated with C for system-level operation. The project focuses on:
+
+\begin{itemize}[leftmargin=2em, itemsep=0.5em]
+    \item \textbf{Character-based Hash Algorithm:} Implementation of a custom string hashing function with character-specific processing logic and then optimize it to achieve a 43.5\% performance improvement
+    
+    \item \textbf{Recursive Computation:} Implementation of a recursive Fibonacci function
+        
+    \item \textbf{Hardware Communication:} Integration with UART peripheral for real-time data exchange between the microcontroller and external systems
+\end{itemize}
+
+The implementations demonstrate critical concepts in embedded systems development, including mixed-language programming, hardware peripheral control, and algorithm optimization techniques specifically designed for resource-constrained environments. Each solution addresses different aspects of microcontroller programming, from computational efficiency to memory management and I/O operations.
+\end{sectionbox}
+
+
+
+
+
+\begin{sectionbox}{Project Structure}
+The project is organized into a modular structure with dedicated folders for each problem solution and multiple input modes:
+
+\subsection*{Main Entry Points}
+Multiple C files provide different input methods for testing:
+\begin{itemize}[leftmargin=2em, itemsep=0.5em]
+    \item \textbf{hardcoded\_input.c} - Input is provided directly in the code
+    \item \textbf{UART\_input.c} - Receives input via UART hardware interface
+    \item \textbf{scanf\_input.c} - Uses Keil's serial console for input
+    \item \textbf{test\_optimization.c} - Performance benchmark harness for Question 1
+    \item \textbf{return\_ptr.c} - Used to run \texttt{fib\_return\_ptr.s} variant for Question 3
+\end{itemize}
+
+
+\begin{tcolorbox}[colback=titleblue!3,colframe=titleblue!30,arc=2mm]
+\textbf{Execution Note:} The project is configured to use hardcoded\_input.c by default. Other entry points can be enabled by uncommenting the desired file and commenting out the currently active one.
+\end{tcolorbox}
+
+
+\subsection*{Implementation Folders}
+\begin{itemize}[leftmargin=2em, itemsep=0.5em]
+    \item \textbf{Question\_1/} - String hashing implementations:
+    \begin{itemize}
+        \item \texttt{hash.s} - Basic implementation
+        \item \texttt{hash\_optimized.s} - Optimized version with performance improvements
+        \item \texttt{min\_registers.s} - Uses only scratch registers (no stack usage)
+    \end{itemize}
+
+    \item \textbf{Question\_2/} - Digit reduction algorithm:
+    \begin{itemize}
+        \item \texttt{sum\_mod.s} - Straightforward implementation
+    \end{itemize}
+
+    \item \textbf{Question\_3/} - Fibonacci implementations:
+    \begin{itemize}
+        \item \texttt{fibonacci.s} - Standard recursive implementation
+        \item \texttt{fib\_return\_ptr.s} - Returns address of result, stored in a local variable
+    \end{itemize}
+
+    \item \textbf{Bonus/} - Contains the solution for the bonus question
+\end{itemize}
+\end{sectionbox}
+
+\begin{sectionbox}{Technical Implementation}
+\subsection*{Core Function Analysis}
+
+\begin{itemize}[leftmargin=2em]
+
+    \item \textbf{String Hasher (hash\_final.s)} - Character processing logic:
+    \begin{lstlisting}[language={[x86masm]Assembler}]
+    ; Digit conversion
+    LDR R8, =digit_table  ; Load lookup table
+    LDRB R7, [R8, R7]     ; Get table value
+    
+    ; Uppercase handling
+    ADDLE R5, R5, R6, LSL #1  ; 2*ASCII via barrel shifter
+    
+    ; Lowercase calculation
+    SUB R7, R6, #'a'       ; Offset from 'a'
+    MLA R5, R7, R7, R5     ; (offset)^2 + hash
+    \end{lstlisting}
+
+    \textbf{Processing Logic:}
+    \begin{itemize}
+        \item \textit{Digits:} Mapped to predefined values (e.g., '0'→5, '1'→12) via \texttt{digit\_table}
+        \item \textit{Uppercase:} Add 2×ASCII value via barrel shifter (LSL \#1)
+        \item \textit{Lowercase:} Add (char-'a')² value using MLA instruction (fusing multiply and add)
+        \item \textit{Special Chars:} Skipped in processing
+    \end{itemize}
+
+\item \textbf{Digit Reducer (\texttt{sum\_mod.s})} – Core reduction logic:
+\begin{lstlisting}[language={[x86masm]Assembler}]
+    ; Digit summation
+    MOV R5, #10        ; Set divisor for decimal base
+    UDIV R6, R4, R5    ; R6 = R4 / 10
+    MLS R7, R5, R6, R4 ; R7 = R4-(R5*R6) -> extract last digit
+    
+    ; Modulo 7 operation
+    MOV R5, #7         ; Set divisor for modulo
+    UDIV R6, R4, R5    ; R6 = R4 / 7
+    MLS R7, R5, R6, R4 ; R7 = R4 - (R5 * R6) -> R4 mod 7
+\end{lstlisting}
+
+\textbf{Algorithm:}
+    \begin{itemize}
+    \item Extracts each digit of the hash value (e.g., 1234 → 1, 2, 3, 4) by repeatedly dividing by 10 and accumulating the sum (1234 → 1+2+3+4=10).
+    \item Computes modulo 7 of the sum (e.g., 10 \% 7 = 3). 
+    \end{itemize}
+\end{itemize}
+\end{sectionbox}
+
+
+
+
+
+
+
+
+
+\begin{sectionbox}{Technical Implementation (continued)}
+\subsection*{Core Function Analysis}
+
+\begin{itemize}[leftmargin=2em]
+
+
+    \item \textbf{Fibonacci (fibonacci.s)} - Recursive implementation with stack management:
+    \begin{lstlisting}[language={[x86masm]Assembler}]
+    ; Base case handling
+    CMP R0, #0          ; Check n=0
+    BXEQ LR             ; Return 0 (R0 is already 0)
+    CMP R0, #1          ; Check n=1
+    BXEQ LR             ; Return 1 (R0 is already 1)
+    
+    ; Recursive decomposition
+    PUSH {LR, R0}       ; Save return address and n
+    SUB R0, R0, #1      ; n-1
+    BL fibonacci        ; fib(n-1)
+    POP {R1}            ; Restore n
+    PUSH {R0}           ; Save fib(n-1)
+    SUB R0, R1, #2      ; n-2
+    BL fibonacci        ; fib(n-2)
+    POP {R1}            ; R1 = fib(n-1)
+    ADD R0, R0, R1      ; R0 = fib(n-1) + fib(n-2)
+    POP {PC}            ; Return
+    \end{lstlisting}
+
+    \textbf{Mechanism:} Implements the recursive definition fib(n) = fib(n-1) + fib(n-2):
+    \begin{itemize}
+        \item Preserves return address (LR) and registers using PUSH/POP
+        \item Uses R0 for both input parameter and return value
+        \item Uses conditional return for base cases to minimize branching
+    \end{itemize}
+\end{itemize}
+\end{sectionbox}
+
+
+\begin{sectionbox}{Testing \& Validation}
+    \subsection*{Testing Methodology}
+    To validate our implementations, we performed comprehensive testing using both static test vectors and dynamic inputs. For performance evaluation, we used the Keil $\mu$Vision simulator with "Performance analyzer" enabled to measure execution time of the optimized versus the baseline hash implementation.
+    
+\subsection*{Validation Results}
+\begin{center}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Input} & \textbf{Raw Hash} & \textbf{Reduced} & \textbf{Fib} & \textbf{Checksum} & \textit{Characteristics} \\
+\midrule
+"" (empty)        & 0    & 0 & 0  & 0  & Edge case \\
+"Keil uVision"     & 1752  & 1 & 1  & 90  & Alphabetic \\
+"STM32-F411RE"    & 983 & 6 & 8 & 3  & Mixed case \\
+"Arm 2025"       & 601  & 0 & 0  & 123  & Alphanumeric \\
+
+\bottomrule
+\end{tabular}
+\end{center}
+\end{sectionbox}
+
+
+
+
+
+\begin{sectionbox}{Optimization Techniques}
+
+\subsection*{Optimization Strategies}
+
+Key optimizations implemented in the hash function:
+
+\begin{itemize}[leftmargin=2em]
+    
+    \item \textbf{Single-Pass Processing:} Integrated string length calculation during character processing (eliminated separate traversal)
+    
+    \item \textbf{Conditional execution:} Implementing uppercase character processing with conditional execution (LE suffix) to avoid branch penalties:
+    \begin{lstlisting}[language={[x86masm]Assembler}]
+    CMP     R6, #'Z'           ; Compare with 'Z'
+    ADDLE   R5, R5, R6, LSL #1 ; Conditionally execute if <='Z'
+    BLE     loop_start
+    \end{lstlisting}
+    
+    \item \textbf{Barrel shifter utilization:} Employing the ARM barrel shifter for efficient multiplication by powers of 2:
+    \begin{lstlisting}[language={[x86masm]Assembler}]
+    ADDLE R5, R5, R6, LSL #1 ; Instead of separate shift
+    \end{lstlisting}
+    
+    \item \textbf{Combined operations:} Using MLA (Multiply-Accumulate) to perform multiplication and addition in a single instruction:
+    \begin{lstlisting}[language={[x86masm]Assembler}]
+    MLA R5, R6, R6, R5  ; R5 = (R6*R6) + R5 in one cycle
+    \end{lstlisting}
+    
+    \item \textbf{Efficient character classification:} Implementing a single-branch lowercase character check:
+    \begin{lstlisting}[language={[x86masm]Assembler}]
+    SUB r0, r0, #'a'    ; Offset from 'a'
+    CMP r0, #25         ; Check if in range 0-25 ('a' to 'z')
+    BHI not_lowercase   ; Branch if higher (unsigned)
+    \end{lstlisting}    
+
+    \item \textbf{Post-index LDRB}: Used to combine load and increment in one instruction:
+    \begin{lstlisting}[language={[x86masm]Assembler}]
+    LDRB R6, [R4], #1  ; Instead of separate ADD for R4
+    \end{lstlisting}
+
+
+\end{itemize}
+
+\begin{tcolorbox}[colback=titleblue!3,colframe=titleblue!30,arc=2mm]
+\textbf{Performance Optimizations:} Our optimized hash implementation achieved a 
+\textbf{43.5\% speedup} over the baseline implementation. The benchmark was performed on 
+a 1000-character string with an equal distribution of digits, uppercase and lowercase letters, and some symbols.
+\end{tcolorbox}
+\end{sectionbox}
+
+
+
+
+
+
+\begin{sectionbox}{Conclusion \& Learning Outcomes}
+This lab provided valuable experience in several areas of embedded programming:
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{ARM Assembly Mastery:} Gained practical experience with ARM instruction set architecture, including efficient use of specialized instructions.
+    
+    \item \textbf{Register Optimization:} Understanding of register allocation constraints, a critical skill for interrupt handlers and resource-constrained environments
+    
+    \item \textbf{Optimization Techniques:} Learned to identify and implement performance optimizations for resource-constrained environments, achieving significant speed improvements through instruction selection and branch elimination
+    
+    \item \textbf{Mixed-Language Programming:} Developed skill in integrating C and assembly code, including proper parameter passing and return value handling    
+\end{itemize}
+
+% The techniques learned in this laboratory exercise provide a foundation for more complex embedded systems development, particularly in scenarios where performance optimization, register constraints, and hardware interaction are critical requirements.
+\end{sectionbox}
+
+\begin{sectionbox}{Future Work}
+Based on our experience and performance analysis, several optimization opportunities remain for future exploration:
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Elimination of Division Instructions:}
+    Replace \texttt{UDIV} operations with multiplication-based division for constant divisors (e.g. 10). For example:
+    \begin{lstlisting}[language={[x86masm]Assembler}]
+    ; Instead of:
+    MOV R5, #10
+    UDIV R6, R4, R5
+    
+    ; Division by 10 via reciprocal
+    LDR R5, =0xCCCCCCCD ; Magic constant for 1/10 in Q32 format
+    UMULL R6, R7, R4, R5 ; R7 = (R4 * magic) >> 32 = R4 / 10
+    MOV R7, R7, LSR #3   ; Complete the division
+    \end{lstlisting}
+
+    \begin{tcolorbox}[colback=titleblue!3,colframe=titleblue!30,arc=2mm]
+    \textbf{Impact on Cortex-M4:}  
+    While the M4 implements \texttt{UDIV} in hardware (2-12 cycles, divisor-dependent), reciprocal multiplication reduces worst-case execution time (WCET). 
+    \end{tcolorbox}
+        
+    \item \textbf{Loop unrolling:} Apply strategic loop unrolling in the string processing loop to reduce branch prediction overhead for long input strings
+    \item \textbf{Register allocation refinement:} Further tune register usage patterns for improved locality and reduced memory operations
+    \item \textbf{Hybrid Digital Root:}  
+    Combine digit summation with modulo 9 properties (e.g., \texttt{digital\_root = 1 + (num - 1) \% 9}) for single-step digit addition
+
+\end{itemize}
+\end{sectionbox}
+
+
+\end{document}
