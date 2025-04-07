@@ -20,6 +20,12 @@ The project demonstrates critical concepts such as mixed-language programming, h
 The repository is organized as follows:
 
 - **`/project/`** - Contains all source code and Keil project files
+  - **`Lab1.uvprojx`** - Keil µVision project file
+  - **`main/`** - Main entry point files for different input methods
+  - **`question1/`** - Assembly files for Question 1 (string hashing)
+  - **`question2/`** - Assembly files for Question 2 (digit reduction)
+  - **`question3/`** - Assembly files for Question 3 (Fibonacci function)
+  - **`bonus/`** - Assembly files for the bonus question
 - **`/docs/`** - Documentation folder
   - **`Report.pdf`** - Detailed technical report with implementation details and results
   - **`Assignment.pdf`** - Original assignment requirements and specifications
@@ -42,16 +48,16 @@ The following C files provide different input methods for testing:
 > **Note**: The project is configured to use `hardcoded_input.c` by default. To switch entry points, uncomment the desired file and comment out the currently active one.
 
 ### Implementation Folders
-- **Question_1/**: String hashing implementations:
+- **question1/**: String hashing implementations:
   - `hash.s`: Basic implementation.
   - `hash_optimized.s`: Optimized version with performance improvements.
   - `min_registers.s`: Uses only scratch registers (no stack usage).
-- **Question_2/**: Digit reduction algorithm:
+- **question2/**: Digit reduction algorithm:
   - `sum_mod.s`: Straightforward implementation.
-- **Question_3/**: Fibonacci implementations:
+- **question3/**: Fibonacci implementations:
   - `fibonacci.s`: Standard recursive implementation.
   - `fib_return_ptr.s`: Returns the address of the result, stored in a local variable.
-- **Bonus/**: Contains the solution for the bonus question.
+- **bonus/**: Contains the solution for the bonus question.
 
 ---
 

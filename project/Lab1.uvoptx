@@ -182,9 +182,9 @@
         <aSer3>0</aSer3>
         <eProf>0</eProf>
         <aLa>0</aLa>
-        <aPa1>1</aPa1>
+        <aPa1>0</aPa1>
         <AscS4>0</AscS4>
-        <aSer4>1</aSer4>
+        <aSer4>0</aSer4>
         <StkLoc>0</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
@@ -226,7 +226,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\hardcoded_input.c</PathWithFileName>
+      <PathWithFileName>.\src\main\hardcoded_input.c</PathWithFileName>
       <FilenameWithoutPath>hardcoded_input.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -238,7 +238,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\UART_input.c</PathWithFileName>
+      <PathWithFileName>.\src\main\UART_input.c</PathWithFileName>
       <FilenameWithoutPath>UART_input.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -250,7 +250,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\test_optimization.c</PathWithFileName>
+      <PathWithFileName>.\src\main\test_optimization.c</PathWithFileName>
       <FilenameWithoutPath>test_optimization.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -262,7 +262,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\scanf_input.c</PathWithFileName>
+      <PathWithFileName>.\src\main\scanf_input.c</PathWithFileName>
       <FilenameWithoutPath>scanf_input.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -274,7 +274,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\return_ptr.c</PathWithFileName>
+      <PathWithFileName>.\src\main\return_ptr.c</PathWithFileName>
       <FilenameWithoutPath>return_ptr.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -650,7 +650,7 @@
   </Group>
 
   <Group>
-    <GroupName>Question_1</GroupName>
+    <GroupName>Question 1</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -662,7 +662,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\hash.s</PathWithFileName>
+      <PathWithFileName>.\src\question1\hash.s</PathWithFileName>
       <FilenameWithoutPath>hash.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -674,7 +674,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\hash_optimized.s</PathWithFileName>
+      <PathWithFileName>.\src\question1\hash_optimized.s</PathWithFileName>
       <FilenameWithoutPath>hash_optimized.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -686,7 +686,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\min_registers.s</PathWithFileName>
+      <PathWithFileName>.\src\question1\min_registers.s</PathWithFileName>
       <FilenameWithoutPath>min_registers.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -694,7 +694,7 @@
   </Group>
 
   <Group>
-    <GroupName>Question_2</GroupName>
+    <GroupName>Question 2</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -706,7 +706,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\sum_mod.s</PathWithFileName>
+      <PathWithFileName>.\src\question2\sum_mod.s</PathWithFileName>
       <FilenameWithoutPath>sum_mod.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -714,7 +714,7 @@
   </Group>
 
   <Group>
-    <GroupName>Question_3</GroupName>
+    <GroupName>Question 3</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -726,7 +726,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\fibonacci.s</PathWithFileName>
+      <PathWithFileName>.\src\question3\fibonacci.s</PathWithFileName>
       <FilenameWithoutPath>fibonacci.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -738,7 +738,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\fib_return_ptr.s</PathWithFileName>
+      <PathWithFileName>.\src\question3\fib_return_ptr.s</PathWithFileName>
       <FilenameWithoutPath>fib_return_ptr.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -758,7 +758,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Bonus.s</PathWithFileName>
+      <PathWithFileName>.\src\bonus\Bonus.s</PathWithFileName>
       <FilenameWithoutPath>Bonus.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>

@@ -387,27 +387,27 @@
             <File>
               <FileName>hardcoded_input.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\hardcoded_input.c</FilePath>
+              <FilePath>.\src\main\hardcoded_input.c</FilePath>
             </File>
             <File>
               <FileName>UART_input.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\UART_input.c</FilePath>
+              <FilePath>.\src\main\UART_input.c</FilePath>
             </File>
             <File>
               <FileName>test_optimization.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\test_optimization.c</FilePath>
+              <FilePath>.\src\main\test_optimization.c</FilePath>
             </File>
             <File>
               <FileName>scanf_input.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\scanf_input.c</FilePath>
+              <FilePath>.\src\main\scanf_input.c</FilePath>
             </File>
             <File>
               <FileName>return_ptr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\return_ptr.c</FilePath>
+              <FilePath>.\src\main\return_ptr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -567,47 +567,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Question_1</GroupName>
+          <GroupName>Question 1</GroupName>
           <Files>
             <File>
               <FileName>hash.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\hash.s</FilePath>
+              <FilePath>.\src\question1\hash.s</FilePath>
             </File>
             <File>
               <FileName>hash_optimized.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\hash_optimized.s</FilePath>
+              <FilePath>.\src\question1\hash_optimized.s</FilePath>
             </File>
             <File>
               <FileName>min_registers.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\min_registers.s</FilePath>
+              <FilePath>.\src\question1\min_registers.s</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Question_2</GroupName>
+          <GroupName>Question 2</GroupName>
           <Files>
             <File>
               <FileName>sum_mod.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\sum_mod.s</FilePath>
+              <FilePath>.\src\question2\sum_mod.s</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Question_3</GroupName>
+          <GroupName>Question 3</GroupName>
           <Files>
             <File>
               <FileName>fibonacci.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\fibonacci.s</FilePath>
+              <FilePath>.\src\question3\fibonacci.s</FilePath>
             </File>
             <File>
               <FileName>fib_return_ptr.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\fib_return_ptr.s</FilePath>
+              <FilePath>.\src\question3\fib_return_ptr.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -617,7 +617,7 @@
             <File>
               <FileName>Bonus.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\Bonus.s</FilePath>
+              <FilePath>.\src\bonus\Bonus.s</FilePath>
             </File>
           </Files>
         </Group>
