@@ -19,6 +19,9 @@ The project demonstrates critical concepts such as mixed-language programming, h
 
 The repository is organized as follows:
 
+- **`/docs/`** - Documentation folder
+  - **`Report.pdf`** - Detailed technical report with implementation details and results
+  - **`Assignment.pdf`** - Original assignment requirements and specifications
 - **`/project/`** - Contains all source code and Keil project files
   - **`Lab1.uvprojx`** - Keil µVision project file
   - **`main/`** - Main entry point files for different input methods
@@ -26,9 +29,6 @@ The repository is organized as follows:
   - **`question2/`** - Assembly files for Question 2 (digit reduction)
   - **`question3/`** - Assembly files for Question 3 (Fibonacci function)
   - **`bonus/`** - Assembly files for the bonus question
-- **`/docs/`** - Documentation folder
-  - **`Report.pdf`** - Detailed technical report with implementation details and results
-  - **`Assignment.pdf`** - Original assignment requirements and specifications
 - **`README.md`** - This file, providing an overview and instructions
 
 ---
