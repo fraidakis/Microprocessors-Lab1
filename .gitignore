@@ -1,1 +1,14 @@
-project/Objects
+# Build output folders
+DebugConfig/
+Listings/
+Objects/
+RTE/
+
+# Keil uVision build files
+*.uvguix.*
+*.uvoptx
+*.scvd
+
+# Local configuration files
+.vscode/
+etc/
