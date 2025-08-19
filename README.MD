@@ -10,16 +10,16 @@ This repository contains three comprehensive laboratory exercises focusing on em
 ## Repository Structure
 
 ```
-├── README.MD              # This file - main repository overview
-├── Lab1/                  # Assembly Programming & UART Communication
+├── README.MD             # This file - main repository overview
+├── Lab1/                 # Assembly Programming & UART Communication
 │   ├── README.MD         # Lab 1 specific documentation
 │   ├── docs/             # Lab 1 documentation and reports
 │   └── project/          # Lab 1 source code and Keil project
-├── Lab2/                  # Timer Interrupts & LED Control
+├── Lab2/                 # Timer Interrupts & LED Control
 │   ├── README.MD         # Lab 2 specific documentation
 │   ├── docs/             # Lab 2 documentation and reports
 │   └── project/          # Lab 2 source code and Keil project
-└── Lab3/                  # Environmental Control System
+└── Lab3/                 # Environmental Control System with DHT11
     ├── README.MD         # Lab 3 specific documentation
     ├── docs/             # Lab 3 documentation and reports
     └── project/          # Lab 3 source code and Keil project
@@ -38,7 +38,7 @@ This repository contains three comprehensive laboratory exercises focusing on em
 - **Technologies:** C programming, Timer peripherals, GPIO, Interrupt handling
 - **Skills:** Interrupt-driven programming, state machines, real-time processing
 
-### [Lab 3: Environmental Control System](./Lab3/)
+### [Lab 3: Environmental Control System with DHT11](./Lab3/)
 **Focus:** Advanced sensor integration and autonomous system design
 - **Key Topics:** Environmental monitoring, sensor interfacing, adaptive control systems
 - **Technologies:** DHT11 sensor, Touch/Button interfaces, LED indicators, UART menu system
@@ -52,7 +52,6 @@ This repository contains three comprehensive laboratory exercises focusing on em
   - Launch Keil and open Pack Installer (Project > Manage > Pack Installer)
   - Search for "STM32F411" and install "Keil::STM32F4xx_DFP - version 2.17.0"
   - **Note**: Version 2.17.0 ensures compatibility with project files. Newer versions require additional STM32CubeMX configuration
-- **STM32F4xx Device Family Pack** (version 2.17.0)
 - **Hardware:** STM32F411RE Nucleo board
 - **Additional Components:** 
   - DHT11 temperature/humidity sensor (Lab 3)
@@ -119,28 +118,17 @@ Through these laboratory exercises, students will:
 4. **Apply Software Engineering Practices:** Implement modular design, error handling, and system documentation
 5. **Optimize Embedded Applications:** Balance performance, memory usage, and power consumption
 
-## Key Concepts Covered
-
-- **Low-Level Programming:** Assembly language, register allocation, stack management
-- **Hardware Abstraction:** Driver development, peripheral configuration, hardware timers
-- **Real-Time Systems:** Interrupt handling, task scheduling, timing constraints
-- **Communication Protocols:** UART, serial communication, data formatting
-- **System Design:** State machines, error handling, user interfaces
-- **Performance Optimization:** Algorithm efficiency, memory management, code optimization
-
 ## Getting Help
 
 Each lab folder contains detailed documentation including:
 - Assignment specifications
 - Implementation guidelines
 - Testing procedures
-- Performance analysis
-- Troubleshooting guides
 
-For technical support or questions, please refer to the individual lab README files or contact the course instructor.
+For technical support or questions, please refer to the individual lab README files.
 
 ---
 
-**Course:** Microprocessors and Peripherals Laboratory
+**Course:** Microprocessors and Peripherals Laboratory  
 **Institution:** Aristotle University of Thessaloniki  
 **Semester:** Spring 2025

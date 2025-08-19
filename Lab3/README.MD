@@ -1,12 +1,10 @@
-# Lab 3: Autonomous Environmental Control System with DHT11 Sensor
+# Lab 3: Environmental Control System with DHT11
 **Advanced Sensor Integration & Autonomous System Design**  
 **Author:** Fraidakis Ioannis  
 **Date:** June 2025  
 
 ## Overview
-This laboratory exercise implements an autonomous environmental control system using the ARM NUCLEO M4 microcontroller (STM32F411RE). The system demonstrates advanced microcontroller programming concepts including sensor interfacing, dual-mode operation and multi-level alert management.
-
-The system features a DHT11 temperature-humidity sensor interface, touch sensor-driven mode switching, comprehensive UART command interface, and sophisticated alert management with panic reset functionality. The implementation showcases interrupt-driven architecture, real-time environmental monitoring, and user-interactive control systems.
+This laboratory exercise implements an autonomous environmental control system using the ARM NUCLEO M4 microcontroller (STM32F411RE). The system features a DHT11 temperature-humidity sensor interface, touch sensor-driven mode switching, comprehensive UART command interface, and sophisticated alert management with panic reset functionality. The implementation showcases interrupt-driven architecture, real-time environmental monitoring, and user-interactive control systems.
 
 ---
 
@@ -43,12 +41,12 @@ The system integrates the following hardware components:
 - **System State Management**: Global `volatile` variables manage operational modes, authentication states, and configuration parameters. The `volatile` keyword ensures correct ISR-main loop data sharing
 - **UART Receive Queue**: A `Queue` structure buffers incoming UART characters, decoupling interrupt reception from main loop processing
 - **Sensor Data Storage**: Floating-point variables store the most recent temperature and humidity readings
-- **Authentication Context**: Secure storage for user credentials and AEM (student ID) with proper buffer management and security considerations
+- **Authentication Context**: Secure storage for user credentials with proper buffer management and security considerations
 
 #### Operational Modes
 The system operates using a dual-mode architecture with authentication gate:
 
-- **Authentication Phase**: Password verification followed by AEM capture with secure input handling and visual feedback
+- **Authentication Phase**: Password verification followed by AEM (student ID) capture with secure input handling and visual feedback
 - **Mode A (Normal)**: Standard environmental monitoring with configurable frequency and display options
 - **Mode B (Alert)**: Enhanced monitoring with LED alerts, threshold detection, and automatic recovery mechanisms
 
@@ -173,18 +171,6 @@ Advanced command processing features include:
 - **State Machine Implementation**: Clean mode transitions and system state management
 - **Error Handling**: Comprehensive input validation and system recovery
 
-### Key Algorithms
-1. **Environmental Threshold Monitoring**: Continuous comparison with alert thresholds
-2. **Consecutive Reading Analysis**: Multi-sample decision making for stability
-3. **Dynamic Frequency Calculation**: AEM-based adaptive timing with bounds checking
-4. **Emergency Detection**: Multi-parameter critical condition assessment
-
-### Memory Management
-- **Sensor Data Buffering**: Historical readings for consecutive analysis
-- **Configuration Storage**: User preferences and system parameters
-- **Status Tracking**: Mode transitions and alert history
-- **Dynamic Allocation**: Efficient memory usage for sensor arrays
-
 ---
 
 ### Hardware Connections
@@ -200,13 +186,9 @@ Touch Sensor:
 - Signal -> PC_1 (Digital Pin with interrupt capability)
 
 Status LED:
-- Connected to PB_0 (GPIO Pin)
-- Programmable blinking patterns for alerts
-
-UART Interface:
-- TX/RX pins for bidirectional communication
-- Baud Rate: 115200
-- Used for authentication, commands, and data output
+- Connected to PB_0 (GPIO Pin) through a current-limiting resistor
+- Resistor: 220Ω - 330Ω (recommended for 3.3V logic)
+- Connection: PB_0 → Resistor → LED Anode → LED Cathode → GND
 ```
 
 ### Testing and Validation
@@ -217,7 +199,6 @@ UART Interface:
 |---------------|-----------|------------------|
 | Authentication | Correct password "2025" | Proceed to AEM input stage |
 | Authentication | Incorrect password | Error message, re-prompt |
-| Authentication | AEM input "10736" | Successful login, menu display |
 | Sensor Reading | Normal conditions | Temperature/humidity display |
 | Mode Switching | Touch sensor press | Toggle between Mode A/B |
 | Frequency Control | Command 'a' | Increase frequency (min 2s) |
@@ -239,60 +220,10 @@ UART Interface:
 
 #### Implementation Challenges and Solutions
 
-**Challenge 1: DHT11 Timing Critical Sections**
+**Challenge: DHT11 Timing Critical Sections**  
 The DHT11 sensor requires microsecond-precise timing for proper communication. Any interrupt during the critical reading phase could disrupt the timing and cause data corruption or communication failure.
 
 **Solution**: Implemented critical sections during DHT11 communication by temporarily disabling interrupts using `__disable_irq()` and `__enable_irq()` around timing-sensitive operations. Additionally, used dedicated timing functions with precise delay mechanisms to ensure protocol compliance. The sensor reading is scheduled during low-activity periods to minimize interrupt conflicts.
-
-### Setup and Execution
-
-**Testing Procedure**:
-   - Connect to UART terminal (115200 baud)
-   - Power on system and observe startup sequence
-   - Enter correct password ("2025") and Student ID
-   - Test menu commands (a, b, c, d, status)
-   - Test terminal controls (Ctrl+C, Ctrl+X)
-   - Verify mode switching with touch sensor
-   - Test alert conditions with environmental changes
-   - Validate emergency response with extreme conditions
-
----
-
-## Expected System Behavior
-
-### Startup Sequence
-```
-System Starting...
-Enter Password: ****
-Password Correct!
-Enter Student ID (AEM): 10736
-Login Successful!
-
-=== Environmental System ===
-[Menu displays]
-Current Mode: Normal (A)
-Reading Frequency: 6 seconds
-```
-
-### Normal Operation Example
-```
-Temperature: 23.5°C, Humidity: 45%
-Temperature: 24.1°C, Humidity: 47%
-[Touch sensor pressed - Mode switch]
-Switched to Alert Mode (B)
-Temperature: 26.2°C, Humidity: 52%
-ALERT: High temperature detected! LED blinking...
-```
-
-### Emergency Response Example
-```
-Temperature: 36.8°C, Humidity: 85%
-WARNING: Critical conditions detected (1/3)
-Temperature: 37.2°C, Humidity: 87%
-WARNING: Critical conditions detected (2/3)
-Temperature: 38.1°C, Humidity: 89%
-PANIC RESET: System entering emergency mode!
-```
 
 ---
 
@@ -302,18 +233,7 @@ Upon completion of this lab, students will have:
 
 1. **Advanced Sensor Integration**: Experience with digital sensor protocols and data processing
 2. **Complex System Design**: Skills in multi-component system architecture and coordination
-3. **Adaptive Control Systems**: Implementation of intelligent decision-making algorithms
-4. **User Interface Development**: Creation of interactive menu systems and user feedback
-5. **Safety System Design**: Development of emergency response and fail-safe mechanisms
-6. **Real-world Application**: Understanding of practical environmental monitoring systems
-
----
-
-## Future Enhancements
-
-Potential improvements for advanced exploration:
-- **Wireless Communication**: WiFi or Bluetooth connectivity for remote monitoring
-- **Data Logging**: SD card storage for historical environmental data
+3. **User Interface Development**: Creation of interactive menu systems and user feedback
 
 ---
 

@@ -108,7 +108,6 @@ Upon completion of this lab, students will have:
 2. **Implemented Algorithm Optimization**: Applied various optimization techniques to improve performance
 3. **Developed Mixed-Language Programming Skills**: Integrated assembly routines with C applications
 4. **Gained Hardware Interface Experience**: Used UART peripheral for real-time communication
-5. **Applied Software Engineering Practices**: Implemented modular design and comprehensive testing
 
 ---
 
@@ -126,6 +125,6 @@ This lab provided hands-on experience with ARM assembly programming, optimizatio
 
 ---
 
-**Course:** Microprocessors and Peripherals Laboratory
+**Course:** Microprocessors and Peripherals Laboratory  
 **Institution:** Aristotle University of Thessaloniki  
 **Semester:** Spring 2025

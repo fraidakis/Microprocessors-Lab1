@@ -1,4 +1,4 @@
-# Lab 2: Interrupt-Driven LED Control with UART Communication
+# Lab 2: Timer Interrupts & LED Control
 **Real-Time Programming with Interrupts**  
 **Author:** Fraidakis Ioannis  
 **Date:** May 2025  
@@ -106,7 +106,6 @@ The system has been thoroughly tested with various scenarios:
 | LED Lock | Press Button | UART shows "LED Status: LOCKED" |
 | Empty Input | UART: Enter | "No input. Enter new number:" prompt |
 | Hyphen Only | UART: "- - -" | "No valid digits to process." prompt |
-| Extra Hyphens | UART: "1-2-3" and "8-1-" | Processes as "123" and "81" (repeat) |
 | Non-Digit Chars | UART: "1a2b-c3d" | Processes as "123" |
 | Backspace | UART: "123" + Backspace | Input becomes "12", cursor moves back |
 | Buffer Full | UART: (33 digits) | Processes first 32 digits |
@@ -136,7 +135,6 @@ The system has been thoroughly tested with various scenarios:
 
 ### 3. Timer-Based Sequential Processing
 - **Precise Timing**: 0.5-second intervals controlled by hardware timers
-- **Non-blocking Operation**: Main loop remains responsive during digit processing
 - **Interrupt-driven Architecture**: Timer interrupts ensure accurate timing regardless of other operations
 
 ### 4. LED Control System
@@ -146,7 +144,7 @@ The system has been thoroughly tested with various scenarios:
 - **Lock Mechanism**: Button-controlled LED disable/enable
 
 ### 5. Button Interrupt Handling
-- **Improved Detection**: Uses pull-up resistors with falling edge detection for reliable button press detection
+- **Improved Detection**: Uses pull-up resistors with falling edge detection for reliable button press detection (see [Challenge 3](#challenge-3-button-press-detection))
 - **Lock State Management**: Toggles between locked and unlocked LED modes
 - **ISR Optimization**: Minimal processing in interrupt handlers with flag-based main loop processing
 
@@ -171,9 +169,13 @@ The system has been thoroughly tested with various scenarios:
 **Solution**: Adopted a two-buffer strategy with reception buffer and separate processing buffer that isolates active processing from new inputs.
 
 ### Challenge 3: Button Press Detection
-**Problem**: Button interrupts failed to trigger properly due to incorrect pin state checking in the interrupt handler.
+**Problem**: Button interrupts failed to trigger properly due to a logic conflict in the interrupt handler.
 
-**Solution**: Modified the GPIO driver to execute callbacks regardless of pin state after interrupt trigger. Used pull-up resistors with falling edge detection - the preferred configuration for button interfaces (better noise immunity and immediate response on button press).
+**Root Cause**: Our button uses active-low configuration with pull-up resistors (pin HIGH when idle, LOW when pressed). The interrupt handler had a condition `if(p->IDR&(1<<IRQ_pin_index))` that only executed callbacks when the pin was HIGH. However, with falling edge detection, the pin is LOW immediately after the interrupt triggers, so the callback never executed.
+
+**Solution**: Modified the GPIO driver to execute callbacks regardless of pin state after interrupt trigger. This enabled proper falling edge detection with pull-up resistors - the preferred configuration for button interfaces (better noise immunity and immediate response on button press rather than release).
+
+**Benefit**: Using pull-up resistors with falling edge detection is industry standard for embedded button interfaces, providing better noise immunity and immediate response.
 
 ---
 
@@ -184,55 +186,18 @@ The system uses a hierarchical interrupt structure:
 - **Timer Interrupts**: Provide precise 0.5-second timing for digit processing
 - **External Interrupts**: Handle button presses with proper edge detection
 - **UART Interrupts**: Manage asynchronous communication using queue buffering
-- **Nested Interrupt Support**: Proper interrupt prioritization and handling
 
 ### State Machine Design
 ```
 States:
 - IDLE: Waiting for user input
 - PROCESSING: Analyzing digits with timer control
-- LOCKED: LED functionality disabled, analysis continues
-- ERROR: Invalid input handling
 ```
 
 ### Hardware Peripherals
 - **GPIO**: LED control (PA_5) and button input (PC_13) with interrupt capability
 - **UART**: Serial communication for user interface with interrupt-driven reception
 - **Timers**: Precise timing control for digit processing intervals
-- **NVIC**: Nested Vectored Interrupt Controller for interrupt management
-
----
-
-## Expected Behavior Examples
-
-### Example 1: Input "52719"
-```
-Processing digit 5 (odd) -> LED toggles ON, remains ON
-Processing digit 2 (even) -> LED blinks: OFF-ON-OFF-ON...
-Processing digit 7 (odd) -> LED toggles OFF, remains OFF
-Processing digit 1 (odd) -> LED toggles ON, remains ON  
-Processing digit 9 (odd) -> LED toggles OFF, remains OFF
-Analysis complete. Enter new number.
-```
-
-### Example 2: Button Interrupt During Processing
-```
-Processing digit 5 (odd) -> LED toggles ON
-Button pressed -> LED locked ON. Count = 1
-Processing digit 2 (even) -> No LED action (locked)
-Processing digit 7 (odd) -> No LED action (locked)
-Button pressed -> LED unlocked. Count = 2
-Processing digit 1 (odd) -> LED toggles OFF, remains OFF
-```
-
-### Example 3: Input with Special Characters
-```
-Input: "1a2b-c3d"
-Filtered to: "123"
-Processing digit 1 (odd) -> LED toggles
-Processing digit 2 (even) -> LED blinks
-Processing digit 3 (odd) -> LED toggles
-```
 
 ---
 
@@ -253,8 +218,6 @@ Upon completion of this lab, students will have:
 
 - **Interrupt Service Routine Optimization**: Keeping ISRs minimal with flag-based main loop processing
 - **Queue-Based Data Management**: Decoupling interrupt-driven data reception from processing
-- **Button Interface Design**: Proper pull-up resistor configuration with falling edge detection
-- **Real-Time Constraints**: Meeting precise timing requirements in embedded systems
 - **System Responsiveness**: Maintaining user interface responsiveness during background processing
 - **Robust Error Handling**: Input validation, buffer management, and system recovery
 ---
