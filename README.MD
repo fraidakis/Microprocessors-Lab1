@@ -12,17 +12,8 @@ This repository contains three comprehensive laboratory exercises focusing on em
 ```
 ├── README.MD             # This file - main repository overview
 ├── Lab1/                 # Assembly Programming & UART Communication
-│   ├── README.MD         # Lab 1 specific documentation
-│   ├── docs/             # Lab 1 documentation and reports
-│   └── project/          # Lab 1 source code and Keil project
 ├── Lab2/                 # Timer Interrupts & LED Control
-│   ├── README.MD         # Lab 2 specific documentation
-│   ├── docs/             # Lab 2 documentation and reports
-│   └── project/          # Lab 2 source code and Keil project
 └── Lab3/                 # Environmental Control System with DHT11
-    ├── README.MD         # Lab 3 specific documentation
-    ├── docs/             # Lab 3 documentation and reports
-    └── project/          # Lab 3 source code and Keil project
 ```
 ## Laboratory Exercises
 
